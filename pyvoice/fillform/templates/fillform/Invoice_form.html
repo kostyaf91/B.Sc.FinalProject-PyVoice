@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+{% load static %}
+
+<title>Editable Invoice</title>
+<link rel="stylesheet" href="{% static 'fillform/Invoice_files/style.css' %}">
+<link rel="stylesheet" href="{% static 'fillform/Invoice_files/print.css' %}" media="print">
+<script src="{% static 'fillform/Invoice_files/jquery-1.3.2.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'fillform/Invoice_files/example.js' %}" type="text/javascript"></script>
+</head>
+<script>
+    function populateTable() {
+    var complete = []
+    var amount =[]
+        document.getElementById('info').innerHTML = "";
+        var myTab = document.getElementById('items');
+
+        // LOOP THROUGH EACH ROW OF THE TABLE AFTER HEADER.
+        for (i = 1; i < (myTab.rows.length - 5); i++) {
+             var records = []
+
+            // GET THE CELLS COLLECTION OF THE CURRENT ROW.
+            var objCells = myTab.rows.item(i).cells;
+
+            item_name = objCells.item(0).children[0].children[0].value
+             //console.log(item_name)
+            records.push(item_name)
+
+            // LOOP THROUGH EACH CELL OF THE CURENT ROW TO READ CELL VALUES.
+            for (var j = 1; j < objCells.length; j++) {
+                //console.log(objCells.item(j).children[0].value)
+                records.push(objCells.item(j).children[0].value)
+                 }
+
+            complete.push(records)
+
+        }
+        console.log(complete)
+        console.log(typeof complete)
+
+    }
+    document.getElementById('id_table_Items').value = complete;
+
+    amount.push(document.getElementById('total').innerHTML)
+    amount.push(document.getElementById('paid').innerHTML)
+    amount.push(document.getElementById('totalAmount').innerHTML)
+    console.log(amount)
+    document.getElementById('id_amounts').value = amount;
+</script>
+<body data-gr-c-s-loaded="true">
+<div id="page-wrap">
+<!--    action = {% url 'getvalues' %}-->
+ <form  action="{% url 'getvalues' %}" method="post" enctype="multipart/form-data" onSubmit="populateTable()" >
+     {% csrf_token %}
+
+
+<!--    <input type='hidden' id= 'tableData' name='hidden' value='' />-->
+<!--     <input type='hidden' id= 'tableDataAmount' name='hidden' value='' />-->
+    <textarea id="header" >{{context_dummy.name}}</textarea>
+      {{form.table_Items}}
+     {{form.amounts}}
+    <div id="identity">
+ <table id="meta-top">
+    <tbody>
+
+    <tr>
+     <td><textarea name="user_company_name">{{business_Name}}</textarea></td>
+    </tr>
+
+     <tr>
+     <td><textarea name="user_street_address">{{business_Email}}</textarea></td>
+    </tr>
+
+     <tr>
+     <td><textarea name="user_city">{{business_Address}}</textarea></td>
+    </tr>
+
+     <tr>
+     <td><textarea name="user_street">{{business_Phone}}</textarea></td>
+    </tr>
+
+     <tr>
+     <td><textarea name="user_zip" >{{business_Number}}</textarea></td>
+    </tr>
+
+<!--     <tr>-->
+<!--     <td></td>-->
+<!--    </tr>-->
+
+    </tbody>
+   </table>
+{{form.logo}}
+{{form.user}}
+
+<!--<textarea id="address">Chris Coyier-->
+<!--123 Appleseed Street-->
+<!--Appleville, WI 53719-->
+<!--Phone: (555) 555-5555</textarea>-->
+    <img src= {{logo_url}} >
+
+<input type="submit">
+<div id="logo">
+<div id="logoctr">
+<a href="javascript:;" id="change-logo" title="Change logo">Change Logo</a>
+<a href="javascript:;" id="save-logo" title="Save changes">Save</a>
+|
+<a href="javascript:;" id="delete-logo" title="Delete logo">Delete Logo</a>
+<a href="javascript:;" id="cancel-logo" title="Cancel changes">Cancel</a>
+</div>
+<div id="logohelp">
+<input id="imageloc" type="text" size="50" value=""><br>
+(max width: 540px, max height: 100px)
+</div>
+</div>
+<div style="clear:both"></div>
+<div id="customer">
+
+ <table id="meta-s">
+    <tbody>
+
+    <tr>
+     <th>BILL TO</th>
+    </tr>
+
+    <tr>
+        <td>{{form.client_Name}}</td>
+    </tr>
+
+     <tr>
+     <td>{{form.client_Email}}</td>
+    </tr>
+
+     <tr>
+     <td>{{form.client_Address}}</td>
+    </tr>
+
+     <tr>
+     <td>{{form.client_Phone}}</td>
+    </tr>
+
+<!--     <tr>-->
+<!--     <td><textarea name="client_country">client_country</textarea></td>-->
+<!--    </tr>-->
+
+<!--     <tr>-->
+<!--     <td><textarea name="client_zip">client_zip</textarea></td>-->
+<!--    </tr>-->
+
+    </tbody>
+   </table>
+
+<table id="meta">
+<tbody><tr>
+<td class="meta-head">Invoice #</td>
+<td>{{form.invoice_Number}}</td>
+</tr>
+<tr>
+<td class="meta-head">Date</td>
+<td>
+    {{form.date}}
+</td>
+</tr>
+<!--<tr>-->
+<!--<td class="meta-head">Amount Due</td>-->
+<!--<td><div class="due">$875.00</div></td>-->
+<!--</tr>-->
+</tbody></table>
+</div>
+<table id="items">
+<tbody><tr>
+<th>Item</th>
+<th>Description</th>
+<th>Unit Cost</th>
+<th>Quantity</th>
+<th>Price</th>
+</tr>
+<tr class="item-row">
+<td class="item-name"><div class="delete-wpr"><textarea>Web Updates</textarea><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
+<td class="description"><textarea>Monthly web updates for http://widgetcorp.com (Nov. 1 - Nov. 30, 2009)</textarea></td>
+<td><textarea class="cost">$650.00</textarea></td>
+<td><textarea class="qty">1</textarea></td>
+<td><span class="price">$650.00</span></td>
+</tr>
+<tr class="item-row">
+<td class="item-name"><div class="delete-wpr"><textarea>SSL Renewals</textarea><a class="delete" href="javascript:;" title="Remove row">X</a></div></td>
+<td class="description"><textarea>Yearly renewals of SSL certificates on main domain and several subdomains</textarea></td>
+<td><textarea class="cost">$75.00</textarea></td>
+<td><textarea class="qty">3</textarea></td>
+<td><span class="price">$225.00</span></td>
+</tr>
+<tr id="hiderow">
+<td colspan="5"><a id="addrow" href="javascript:;" title="Add a row">Add a row</a></td>
+</tr>
+<!--<tr>-->
+<!--<td colspan="2" class="blank"> </td>-->
+<!--<td colspan="2" class="total-line">Subtotal</td>-->
+<!--<td class="total-value"><div id="subtotal">$875.00</div></td>-->
+<!--</tr>-->
+<tr>
+<td colspan="2" class="blank"> </td>
+<td colspan="2" class="total-line">sub Total</td>
+<td class="total-value"><div id="total">$875.00</div></td>
+</tr>
+<tr>
+<td colspan="2" class="blank"> </td>
+<td colspan="2" class="total-line">tax</td>
+<td class="total-value"><textarea id="paid">$0.00</textarea></td>
+</tr>
+<tr>
+<td colspan="2" class="blank"> </td>
+<td colspan="2" class="total-line balance">Total</td>
+<td class="total-value balance"><div class="due" id="totalAmount">$875.00</div></td>
+</tr>
+</tbody></table>
+<div id="terms">
+ <h5>Terms</h5>
+    {{form.terms}}</div>
+</div>
+ </form>
+
+</div>
+</body></html>

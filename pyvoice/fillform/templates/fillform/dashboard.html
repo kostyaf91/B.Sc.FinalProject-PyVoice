@@ -1,0 +1,20 @@
+{%  extends 'fillform/main.html' %}
+
+{% block content %}
+<br>
+<div class="row centerContent">
+    <div class=" col-sm text-center">
+        <a href="{% url 'geninv' %}"><div><button class="btn btn-outline-secondary create-invoice">Create Invoice</button></div></a>
+        <div class="below-text">It's Free</div>
+
+    </div>
+    <div class="col-sm text-center content-container">
+        <p>Pyinvoice</p>
+        <p> A free Invoice generator that is built with</p>
+        <img src="https://www.python.org/static/community_logos/python-logo-generic.svg" alt="logo" />
+    </div>
+
+</div>
+
+
+{% endblock %}

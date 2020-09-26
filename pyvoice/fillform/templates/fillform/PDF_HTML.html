@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style>
+    @page {
+      size: a4 portrait;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font: 14px/1.4 Georgia, serif;
+    }
+
+    #page-wrap {
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    .invoice {
+      font-size: 29px !important;
+      border: none;
+      font-weight: bold;
+    }
+
+    .invoice:focus {
+      outline: none;
+    }
+
+    /* textarea {
+        border: 0;
+        font: 14px Georgia, Serif;
+        overflow: hidden;
+        resize: none;<div class="drop-box">
+      } */
+    /* 
+    table {
+      border-collapse: collapse;
+      width: 600px !important;
+    } */
+
+    table td,
+    table th {
+      text-align: center;
+    }
+
+    #identity {
+      padding-top: 0px;
+    }
+
+
+    #logo {
+      display: grid;
+      margin-bottom: 20px;
+    }
+
+    #logo span {
+      font-size: 42px;
+      color: grey;
+      font-weight: bold;
+    }
+
+    #logohelp input {
+      margin-bottom: 5px;
+    }
+
+    #customer-title {
+      font-size: 20px;
+      font-weight: 700;
+      float: left;
+    }
+
+    #client_details {
+      margin-top: 0px;
+      width: 300px;
+    }
+
+    /* #meta-s {
+        float: right;
+      }
+      #meta-s th {
+        text-align: center;
+        background-color: #eeeeee;
+      }
+      #meta td {
+        border: 0;
+      }
+      #meta {
+        margin-top: 1px;
+        width: 300px;
+        float: right;
+        border: 1px solid #000;
+      } */
+
+    #meta td {
+      text-align: center;
+      border: 1px solid #000;
+      height: 20px;
+    }
+
+    #meta td.meta-head {
+      text-align: center;
+      background: #eee;
+    }
+
+    #meta td textarea {
+      /* width: 100%; */
+      height: 20px;
+      text-align: center;
+    }
+
+    /* #items {
+      width: 100%;
+    } */
+
+    /*
+
+      #items th {
+        background: #eee;
+      }
+
+      #items textarea {
+        width: 80px;
+        height: 50px;
+      }
+
+      #items tr.item-row td {
+        border: 1px solid;
+        vertical-align: top;
+        padding: 0px;
+      }
+
+      #items td.description {
+        width: 300px;
+      }
+
+      #items td.item-name {
+        width: 175px;
+      }
+
+      #items td.description textarea,
+      #items td.item-name textarea {
+        width: 100%;
+      }
+
+      #items td.total-line {
+        border-right: 0;
+        text-align: right;
+      }
+
+      #items td.total-value {
+        border-left: 0;
+        padding: 10px;
+      }
+
+      #items td.total-value textarea {
+        height: 20px;
+        background: 0 0;
+      }
+
+      #items td.balance {
+        background: #eee;
+      }
+
+      #items td.blank {
+        border: 1px solid;
+        width: 160px;
+      } */
+    .text-field {
+      margin-top: 20px;
+    }
+
+    .invoice-text {
+      float: left;
+    }
+
+    .invoice-text span {
+      font-size: 42px;
+      color: grey;
+      font-weight: bold;
+    }
+
+    .drop-box {
+      width: 200px;
+      height: 80px;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #000;
+      display: flex;
+      float: right;
+      border-radius: 3px;
+    }
+
+    .signup__fileField {
+      display: none;
+    }
+
+    .space-between {
+      display: grid;
+      grid-template-columns: 366px 366px;
+    }
+
+    .space-between h5 {
+      font-size: 20px;
+    }
+
+    .spacer20 {
+      height: 40px;
+    }
+
+    .plus-ico {
+      background-color: #444;
+      width: 30px;
+      height: 30px;
+      border-radius: 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    table {
+      font-size: 12px;
+      padding-top: 20px;
+      border-collapse: collapse;
+      width: 600px;
+    }
+
+    table tr th {
+      text-transform: uppercase;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      padding: 8px 4px;
+    }
+
+    table tr td {
+      text-transform: uppercase;
+
+      padding: 20px 0px;
+    }
+
+    .mr-2 {
+      margin-right: 12px;
+    }
+
+    table tr td input[type="text"] {
+      margin-left: 12px;
+    }
+
+    .form-footer .btn {
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    .invoice-action {
+      display: flex;
+      justify-content: space-between;
+      width: 63%;
+
+    }
+
+    .invoice-action .btn-outline-secondary {
+      font-size: 12px;
+    }
+
+    .form-group.row {
+      display: flex;
+      /* margin-bottom: 12px; */
+    }
+
+    .form-group.row .form-control {
+      /* height: 30px; */
+      border: none;
+      border-radius: 4px;
+      width: 200px;
+    }
+
+    .form-group.row .form-control:focus {
+      outline: none;
+      border: none;
+    }
+
+    .col-form-label {
+      float: left;
+      width: 60px;
+
+    }
+
+    .float-left {
+      /* float: left; */
+      width: 300px;
+
+    }
+
+    /* .bill-form {
+    } */
+
+    .border-bottom {
+      border-bottom: 1px solid #ccc;
+      padding-top: 12px;
+    }
+
+    .text-right {
+      text-align: right;
+
+    }
+
+    .text-left {
+      text-align: left;
+
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .d-block {
+      display: block;
+    }
+  </style>
+
+  <title>Editable Invoice</title>
+  <script src="{% static 'fillform/Editable Invoice_files/jquery-1.3.2.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'fillform/Editable Invoice_files/example.js' %}" type="text/javascript"></script>
+</head>
+
+<body data-gr-c-s-loaded="true">
+  <div id="page-wrap">
+    <form action="{% url 'getvalues' %}" method="post">
+      <div id="identity">
+        <div class="invoice-text">{{invoice_title}}</div>
+
+         <img src="{{ invoice_logo }}" style="
+    width: 130px;
+    float:right;
+" >
+
+
+
+        <div style="clear: both; margin-bottom: 20px"></div>
+        <div id="meta-top">
+          <div class="space-between">
+            <div class="float-left">
+              <h5 class="pl-0">From</h5>
+              <div class="form-group row">
+                <span class="form-control" id="business_name">{{business_Name}}</span>
+
+              </div>
+              <div class="form-group row">
+                <span class="form-control" id="owner_email">{{business_Email}}</span>
+
+              </div>
+              <div class="form-group row">
+                <span class="form-control" id="owner_address">{{business_Address}}</span>
+
+              </div>
+              <div class="form-group row">
+                <span class="form-control" id="owner_phone">{{business_Phone}}</span>
+              </div>
+              <div class="form-group row">
+                <span class="form-control" id="owner_number">{{business_Number}}</span>
+              </div>
+
+
+            </div>
+            <div id="client_details">
+              <div id="meta-s">
+                <div class="bill-form">
+
+                  <h5 class="pl-0">For</h5>
+                  <div class="form-group row">
+                    <span class="form-control" id="clint_name">{{client_Name}}</span>
+                  </div>
+                  <div class="form-group row">
+                    <span class="form-control" id="clint_email">{{client_Email}}</span>
+                  </div>
+                  <div class="form-group row">
+                    <span class="form-control" id="clint_address">{{client_Address}}</span>
+                  </div>
+                  <div class="form-group row">
+                    <span class="form-control" id="clint_phone">{{client_Phone}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="border-bottom"></div>
+          <div class="spacer20"></div>
+
+        </div>
+
+      </div>
+
+      <div style="clear: both"></div>
+      <div id="meta">
+        <div class="">
+
+
+          <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Number</label>
+            <span class="form-control" id="invoice_number">{{invoiceno}}</span>
+
+          </div>
+          <div class="form-group row">
+            <label for="Business Name" class="col-sm-2 col-form-label">Date</label>
+            <span class="form-control" id="invoice_date">{{date}}</span>
+
+          </div>
+<!--          <div class="form-group row">-->
+<!--            <label for="" class="col-sm-2  col-form-label">Terms</label>-->
+<!--            <span class="form-control" id="terms">On Receipt</span>-->
+
+<!--          </div>-->
+<!--          <div class="form-group row">-->
+<!--            <label for="" class="col-sm-2  col-form-label">Due</label>-->
+<!--            <span class="form-control" id="balance_due">INV00045</span>-->
+
+<!--          </div>-->
+
+        </div>
+        <div class="spacer20"></div>
+      </div>
+      <div id="items">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="invoice-detail-summary">Description</th>
+                <th></th>
+                <th class="invoice-detail-rate text">Rate</th>
+                <th class="invoice-detail-quantity text">Qty</th>
+                <th class="invoice-detail-total text">Amount</th>
+              </tr>
+            </thead>
+
+            <tbody>
+         {% for row in description %}
+        <tr>
+          {% for cell in row%}
+           <td> {{ cell }}</td>
+          {% endfor %}
+        </tr>
+
+<!--                <td>-->
+<!--                  <span class="form-control" id="product_name">Product Name</span><br />-->
+<!--                  <span class="form-control" id="item_description">Item Description</span>-->
+<!--                </td>-->
+<!--                <td class="text-right"><span class="form-control" id="rate">00.00</span></td>-->
+<!--                <td class="text-right"><span class="form-control" id="qty">00.00</span></td>-->
+<!--                <td class="text-right mr-2"><span class="form-control" id="amount">Amount</span>-->
+<!--                </td>-->
+<!--              </tr>-->
+            {% endfor %}
+              <!-- <tr>
+            <td style="border-top: none;"></td>
+            <td colspan="5"></td>
+            </tr> -->
+
+              <tr style="border-top:1px solid#ccc;border-bottom: 1px solid #ccc;">
+                <td> </td>
+                <td></td>
+
+
+
+
+                <td><span class="d-block">Subtotal</span>
+                  <span class="d-block">Tax(0%)</span>
+                  <span class="d-block">Total</span>
+                  <span class="">Balance Due</span>
+                </td>
+                <td><span class="d-block">{{amount}}</span>
+                  <span class="d-block">0.00</span>
+                  <span class="d-block">{{amount}}</span>
+                  <span class="">0.00</span></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="text-field">
+        <h5>Terms</h5>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="height: 100px; width: 632px">{{terms}}
+</textarea>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

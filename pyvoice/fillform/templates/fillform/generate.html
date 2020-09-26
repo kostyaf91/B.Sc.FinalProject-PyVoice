@@ -1,0 +1,218 @@
+{%  extends 'fillform/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 form__position">
+  <div class="row" style=" margin: auto">
+    <form action="{% url 'getvalues' %}" onsubmit="showTableData()" method="post" enctype="multipart/form-data">
+      {% csrf_token%}
+      <input type='hidden' id='items_description' name='hidden_item' value='hi' />
+      <input type='hidden' id='items_amount' name='hidden_amount' value='hi' />
+
+      <button type="submit" class="btn btn-outline-secondary">Record Payment</button>
+
+
+      <div class="invoice-detail-body">
+
+        <div class="d-flex space-between">
+          <input class="form-control form-control-lg " placeholder="Invoice" style="width: 50%;" name="invoice_title">
+
+          <div class="drop-box">
+            <label id="file-lable" for="fileInput" class=""> +Logo </label>
+            <p class="drag-drop">
+              <input type="file" name="photo" onchange="previewFile(this);" required>
+            </p>
+            <img id="previewImg" src="/examples/images/transparent.png" class="previewimg">
+
+
+
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+
+            <h5 class="pl-0">From</h5>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" value="{{business_Name}}" name="business_Name">
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" value="{{business_Email}}" name="business_Email">
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2  col-form-label">Address</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control " value="{{business_Address}}" name="business_Address">
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-2 col-form-label">Phone</label>
+              <div class="col-sm-10">
+                <input type="text" class=" form-control" value="{{business_Phone}}" name="business_Phone">
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-2 col-form-label">Business<br> Number</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" value="{{business_Number}}" name="business_Number">
+              </div>
+
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6">
+            <h5 class="pl-0">Bill To</h5>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="client_Name">
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Email</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="client_Email">
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2  col-form-label">Address</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control " name="client_Address">
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Phone</label>
+              <div class="col-sm-10">
+                <input type="text" class=" form-control" name="client_Phone">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="border-bottom"></div>
+        <div class="spacer20"></div>
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6">
+
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Number</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="invoiceno" value="{{invoice_count}}" readonly>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Date</label>
+              <div class="col-sm-10">
+
+                <input type="text" class="form-control" id="date" name="date">
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table" id="items">
+
+            <tbody>
+              <tr>
+                <th class="invoice-detail-margin">&nbsp;</th>
+                <th class="invoice-detail-summary">Description</th>
+                <th class="invoice-detail-rate text-right">Rate</th>
+                <th class="invoice-detail-quantity text-right">Qty</th>
+                <th class="invoice-detail-total text-right">Amount</th>
+                <th class="invoice-detail-tax text-left">Tax</th>
+              </tr>
+              <tr class="item-row">
+
+                <td>
+                  <!--                <a class="delete plus-ico" href="javascript:;" title="Remove row">-</a>-->
+                </td>
+                <td>
+                  <input type="text" class="form-control" placeholder="Item Description" aria-describedby="basic-addon1"
+                    name="description">
+                  <textarea class="form-control mt-2" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </td>
+                <td class="text-right"><input type="text" class="cost" placeholder="0.00" value="" name="cost"></td>
+                <td class="text-right"><input type="text" class="qty" placeholder="0.00" value="" name="qty"></td>
+                <td class="text-right"><span class="price">$00.00</span></td>
+                <td class="text-left">Check</td>
+              </tr>
+
+
+              <tr id="hiderow">
+                <td><a id="addrow" href="javascript:;" class="plus-ico">+</a></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+
+                <td><span class="d-block">Subtotal</span>
+                  <span class="d-block">Tax(0%)</span>
+                  <span class="d-block">Total</span>
+                  <span class="">Balance Due</span>
+                </td>
+                <td><span class="d-block" id="subtotal">0.00</span>
+                  <span class="d-block" id="paid">0.00</span>
+                  <span class="d-block" id="total">0.00</span>
+                  <span class="due">0.00</span></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="">
+          <h5>Note</h5>
+          <textarea class="form-control" rows="3" style="height: 100px;" name="terms"></textarea>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <script>
+    function showTableData() {
+      var complete = []
+      var myTab = document.getElementById('items');
+      for (i = 1; i < (myTab.rows.length - 2); i++) {
+        var records = []
+        var objCells = myTab.rows.item(i).cells;
+        for (var j = 1; j < objCells.length - 2; j++) {
+          records.push(objCells.item(j).children[0].value)
+          if (j == 1) {
+            records.push(objCells.item(j).children[1].value)
+          }
+        }
+        records.push(objCells.item(4).children[0].innerHTML)
+        complete.push(records)
+      }
+      console.log(complete)
+
+      var myJSON = JSON.stringify(complete);
+      document.getElementById('items_description').value = myJSON
+      console.log(myJSON)
+      amount = document.getElementById('total').innerHTML
+      document.getElementById('items_amount').value = amount
+    }
+
+  </script>
+
+  {% endblock %}
