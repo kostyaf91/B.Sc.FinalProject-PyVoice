@@ -3,7 +3,7 @@
 import os
 import sys
 #random - comment
-#Comment
+#C2omment
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pyvoice.settings')
